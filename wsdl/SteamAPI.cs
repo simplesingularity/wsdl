@@ -7,20 +7,24 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace wsdl
 {
     public static class SteamAPI
     {
-       public static ILogger logger { get; set; }
-      public  static bool IsUpdated { get;   set; } = false;
+        public static ILogger logger { get; set; }
+        public static bool IsUpdated { get; set; } = false;
 
         static DirectoryInfo cur_dir;
         static DirectoryInfo steamcmd_dir;
         const string steamcmd_url = "https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip";
 
+        static Regex quote_pattern = new Regex("\\\"(.*?)\\\"");
+
         public static event EventHandler<string> FileDownloaded;
+        public static event EventHandler<string> ErrorDownloading;
 
         //static void Main(string[] args)
         //{
@@ -72,7 +76,7 @@ namespace wsdl
             string steamcmd = Path.Combine(steamcmd_dir.FullName, "steamcmd.exe");
             Process p = new Process();
             p.StartInfo.FileName = steamcmd;
-            p.StartInfo.Arguments = "+login anonymous +exit";
+            p.StartInfo.Arguments = "+login anonymous validate +quit";
             p.StartInfo.UseShellExecute = false;
             p.StartInfo.RedirectStandardOutput = true;
             p.StartInfo.RedirectStandardInput = true;
@@ -95,7 +99,7 @@ namespace wsdl
             string steamcmd = Path.Combine(steamcmd_dir.FullName, "steamcmd.exe");
             Process p = new Process();
             p.StartInfo.FileName = steamcmd;
-            p.StartInfo.Arguments = string.Format("+login anonymous +workshop_download_item {1} {0} +exit", id, gameid);
+            p.StartInfo.Arguments = string.Format("+login anonymous +workshop_download_item {1} {0} validate +quit", id, gameid);
             p.StartInfo.UseShellExecute = false;
             p.StartInfo.RedirectStandardOutput = true;
             p.StartInfo.RedirectStandardInput = true;
@@ -112,7 +116,18 @@ namespace wsdl
             {
                 if (e.Data.StartsWith("Success"))
                 {
-                    FileDownloaded?.Invoke(null, e.Data);
+                    Match m = quote_pattern.Match(e.Data);
+                    if (m.Success)
+                    {
+                        string filename = m.Groups[1].Value;
+                        WriteLine("Downloaded file: {0}", filename);
+
+                        FileDownloaded?.Invoke(null, filename);
+                    }
+                    
+                }else if (e.Data.StartsWith("ERROR"))
+                {
+                    ErrorDownloading?.Invoke(null, e.Data);
                 }
                 WriteLine(e.Data);
             }
@@ -152,7 +167,7 @@ namespace wsdl
 
         private static void WriteLine(string line)
         {
-            if(logger != null)
+            if (logger != null)
             {
                 logger.Log(line);
             }

@@ -10,25 +10,26 @@ namespace wsdl_console
 {
     internal class Program
     {
-        static Regex quote_pattern = new Regex("\\\"(.*?)\\\"");
+      
         static void Main(string[] args)
         {
             SteamAPI.logger = new ConLog();
             SteamAPI.FileDownloaded += SteamAPI_FileDownloaded;
+            SteamAPI.ErrorDownloading += SteamAPI_ErrorDownloading;
             SteamAPI.EnsureSteamCMDInstalled();
             SteamAPI.UpdateSteamCMD();
-            SteamAPI.DownloadItem("2853616849", "4000");
+            SteamAPI.DownloadItem("260413571", "4000");
             Console.Read();
+        }
+
+        private static void SteamAPI_ErrorDownloading(object sender, string e)
+        {
+            Console.WriteLine("Error downloading");
         }
 
         private static void SteamAPI_FileDownloaded(object sender, string e)
         {
-            Match m = quote_pattern.Match(e);
-            if(m.Success)
-            {
-                string filename = m.Groups[1].Value;
-                Console.WriteLine("Downloaded file: {0}", filename);
-            }
+            Console.WriteLine("File downloaded to: {0}");
         }
     }
 }
