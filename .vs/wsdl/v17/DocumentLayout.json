@@ -1,0 +1,110 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\rolan\\source\\repos\\wsdl\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{83A676D8-FCF6-4C7E-8778-3CE664C79CF3}|wsdl-console\\wsdl-console.csproj|c:\\users\\rolan\\source\\repos\\wsdl\\wsdl-console\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{83A676D8-FCF6-4C7E-8778-3CE664C79CF3}|wsdl-console\\wsdl-console.csproj|solutionrelative:wsdl-console\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{83A676D8-FCF6-4C7E-8778-3CE664C79CF3}|wsdl-console\\wsdl-console.csproj|c:\\users\\rolan\\source\\repos\\wsdl\\wsdl-console\\conlog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{83A676D8-FCF6-4C7E-8778-3CE664C79CF3}|wsdl-console\\wsdl-console.csproj|solutionrelative:wsdl-console\\conlog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C34D84C2-C5FF-49C2-9FC5-D71CE98AFC80}|wsdl\\wsdl.csproj|c:\\users\\rolan\\source\\repos\\wsdl\\wsdl\\steamapi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C34D84C2-C5FF-49C2-9FC5-D71CE98AFC80}|wsdl\\wsdl.csproj|solutionrelative:wsdl\\steamapi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C34D84C2-C5FF-49C2-9FC5-D71CE98AFC80}|wsdl\\wsdl.csproj|c:\\users\\rolan\\source\\repos\\wsdl\\wsdl\\ilogger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C34D84C2-C5FF-49C2-9FC5-D71CE98AFC80}|wsdl\\wsdl.csproj|solutionrelative:wsdl\\ilogger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|wsdl||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C34D84C2-C5FF-49C2-9FC5-D71CE98AFC80}|wsdl\\wsdl.csproj|c:\\users\\rolan\\source\\repos\\wsdl\\wsdl\\||{B270807C-D8C6-49EB-8EBE-8E8D566637A1}|5e9a8ac2-4f34-4521-858f-4c248ba31532"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ConLog.cs",
+              "DocumentMoniker": "C:\\Users\\rolan\\source\\repos\\wsdl\\wsdl-console\\ConLog.cs",
+              "RelativeDocumentMoniker": "wsdl-console\\ConLog.cs",
+              "ToolTip": "C:\\Users\\rolan\\source\\repos\\wsdl\\wsdl-console\\ConLog.cs",
+              "RelativeToolTip": "wsdl-console\\ConLog.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-04T04:37:32.411Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ILogger.cs",
+              "DocumentMoniker": "C:\\Users\\rolan\\source\\repos\\wsdl\\wsdl\\ILogger.cs",
+              "RelativeDocumentMoniker": "wsdl\\ILogger.cs",
+              "ToolTip": "C:\\Users\\rolan\\source\\repos\\wsdl\\wsdl\\ILogger.cs",
+              "RelativeToolTip": "wsdl\\ILogger.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-04T04:36:50.671Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\rolan\\source\\repos\\wsdl\\wsdl-console\\Program.cs",
+              "RelativeDocumentMoniker": "wsdl-console\\Program.cs",
+              "ToolTip": "C:\\Users\\rolan\\source\\repos\\wsdl\\wsdl-console\\Program.cs",
+              "RelativeToolTip": "wsdl-console\\Program.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAABIAAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-04T04:33:34.682Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "wsdl",
+              "DocumentMoniker": "C:\\Users\\rolan\\source\\repos\\wsdl\\wsdl\\wsdl.csproj",
+              "RelativeDocumentMoniker": "wsdl\\wsdl.csproj",
+              "ToolTip": "C:\\Users\\rolan\\source\\repos\\wsdl\\wsdl\\wsdl.csproj",
+              "RelativeToolTip": "wsdl\\wsdl.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-11-04T04:10:28.211Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SteamAPI.cs",
+              "DocumentMoniker": "C:\\Users\\rolan\\source\\repos\\wsdl\\wsdl\\SteamAPI.cs",
+              "RelativeDocumentMoniker": "wsdl\\SteamAPI.cs",
+              "ToolTip": "C:\\Users\\rolan\\source\\repos\\wsdl\\wsdl\\SteamAPI.cs",
+              "RelativeToolTip": "wsdl\\SteamAPI.cs",
+              "ViewState": "AQIAAE8AAAAAAAAAAAAuwF4AAABSAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-04T03:58:25.244Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
