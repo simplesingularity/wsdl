@@ -16,15 +16,23 @@ namespace wsdl_console
     {
         static void Main(string[] args)
         {
+
+            DownloadRequest r = SteamAPI.FetchInformation("https://steamcommunity.com/sharedfiles/filedetails/?id=3359071387");
+            Console.WriteLine("Game ID: {0}, Workshop ID: {1}", r.GameId, r.Id);
+
+            AttemptDownload(r);
+            Console.WriteLine("Completed all operations!");
+
+            Console.Read();
+        }
+        static void AttemptDownload(DownloadRequest request)
+        {
             SteamAPI.logger = new ConLog();
             SteamAPI.FileDownloaded += SteamAPI_FileDownloaded;
             SteamAPI.ErrorDownloading += SteamAPI_ErrorDownloading;
             SteamAPI.EnsureSteamCMDInstalled();
             SteamAPI.UpdateSteamCMD();
-            SteamAPI.DownloadItem("3321557660", "4000");
-
-
-            Console.WriteLine("Completed all operations!");
+            SteamAPI.DownloadItem(request);
         }
 
         private static void SteamAPI_ErrorDownloading(object sender, DownloadRequest e)
@@ -34,7 +42,7 @@ namespace wsdl_console
 
         private static void SteamAPI_FileDownloaded(object sender, DownloadRequest e)
         {
-            Console.WriteLine("File {1} downloaded to: {0}", e.Path, e.Id  );
+            Console.WriteLine("File {1} downloaded to: {0}", e.Path, e.Id);
         }
     }
 }

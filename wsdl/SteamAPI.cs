@@ -90,6 +90,11 @@ namespace wsdl
             WriteLine("Updated!");
         }
 
+        public static void DownloadItem(DownloadRequest request )
+        {
+            DownloadItem(request.Id, request.GameId);
+        }
+
         public static void DownloadItem(string id, string gameid)
         {
             WriteLine("Downloading {0} {1}", id, gameid);
@@ -176,6 +181,25 @@ namespace wsdl
             }
             rsp.Close();
 
+        }
+
+        public static DownloadRequest FetchInformation(string url)
+        {
+            HttpWebRequest req = (HttpWebRequest) WebRequest.Create(url);
+            HttpWebResponse resp= (HttpWebResponse)req.GetResponse();
+            if(resp.StatusCode == HttpStatusCode.OK )
+            {
+                string html = "";
+                using (StreamReader sr = new StreamReader(resp.GetResponseStream()))
+                {
+                   html= sr.ReadToEnd();
+                }
+                DownloadRequest dreq = new DownloadRequest();
+                dreq.GameId = Regex.Match(html, "app\\/(\\d+)").Groups[1].Value;
+                dreq.Id = Regex.Match(url, "\\?id=(\\d+)").Groups[1].Value;
+                return dreq;
+            }
+            return null;
         }
 
         private static void WriteLine(string line, params string[] pars)
