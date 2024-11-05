@@ -53,5 +53,9 @@ namespace wsdl_gui
             SteamAPI.EnsureSteamCMDInstalled();
             SteamAPI.UpdateSteamCMD();
         }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+        }
     }
 }
