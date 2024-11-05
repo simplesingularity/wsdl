@@ -78,13 +78,15 @@ namespace wsdl
             p.StartInfo.FileName = steamcmd;
             p.StartInfo.Arguments = "+quit";
             p.StartInfo.UseShellExecute = false;
+            p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            p.StartInfo.CreateNoWindow = true;
             p.StartInfo.RedirectStandardOutput = true;
             p.StartInfo.RedirectStandardInput = true;
             p.StartInfo.RedirectStandardError = true;
             p.OutputDataReceived += P_OutputDataReceived;
             p.Start();
             p.BeginOutputReadLine();
-            p.WaitForExit();
+            //p.WaitForExit();
 
             IsUpdated = true;
             WriteLine("Updated!");
@@ -112,6 +114,8 @@ namespace wsdl
             p.StartInfo.FileName = steamcmd;
             p.StartInfo.Arguments = string.Format("+login anonymous +workshop_download_item {1} {0} +quit", id, gameid);
             p.StartInfo.UseShellExecute = false;
+            p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            p.StartInfo.CreateNoWindow = true;
             p.StartInfo.RedirectStandardOutput = true;
             p.StartInfo.RedirectStandardInput = true;
             p.StartInfo.RedirectStandardError = true;
@@ -119,7 +123,7 @@ namespace wsdl
             p.ErrorDataReceived += P_ErrorDataReceived;
             p.Start();
             p.BeginOutputReadLine();
-            p.WaitForExit();
+            //p.WaitForExit();
         }
 
         private static void P_ErrorDataReceived(object sender, DataReceivedEventArgs e)

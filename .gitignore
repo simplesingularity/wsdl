@@ -2,4 +2,6 @@ wsdl/bin/
 wsdl/obj/
 wsdl-console/bin/
 wsdl-console/obj/
+wsdl-gui/bin/
+wsdl-gui/obj/
 .vs/
