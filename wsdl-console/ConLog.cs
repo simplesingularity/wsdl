@@ -13,5 +13,15 @@ namespace wsdl_console
         {
             Console.WriteLine("[Internal Debug]" + message);
         }
+
+        public void Log(string message, params string[] args)
+        {
+            Log(string.Format(message, args));
+        }
+
+        public void Log(string message, Exception exception)
+        {
+            Log(string.Format("Error: {0}, {1}", exception, exception.Message));
+        }
     }
 }

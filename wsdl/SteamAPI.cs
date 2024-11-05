@@ -14,37 +14,31 @@ namespace wsdl
 {
     public static class SteamAPI
     {
+
         public static ILogger logger { get; set; }
         public static bool IsUpdated { get; set; } = false;
 
         static DirectoryInfo cur_dir;
         static DirectoryInfo steamcmd_dir;
-        const string steamcmd_url = "https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip";
-
+        static Queue<DownloadRequest> downloads = new Queue<DownloadRequest>();
         static Regex quote_pattern = new Regex("\\\"(.*?)\\\"");
 
-        public static event EventHandler<string> FileDownloaded;
-        public static event EventHandler<string> ErrorDownloading;
+        public static event EventHandler<DownloadRequest> FileDownloaded;
+        public static event EventHandler<DownloadRequest> ErrorDownloading;
 
-        //static void Main(string[] args)
-        //{
-        //    cur_dir = new DirectoryInfo(Assembly.GetEntryAssembly().Location).Parent;
-        //    steamcmd_dir = cur_dir.CreateSubdirectory("steamcmd");
-
-        //    Console.WriteLine("Current dir: {0}", cur_dir.FullName);
-        //    Console.WriteLine("SteamCMD dir: {0}", steamcmd_dir.FullName);
-
-        //    EnsureSteamCMDInstalled();
-        //    UpdateSteamCMD();
-
-
-        //    Console.Read();
-        //}
+        const string steamcmd_url = "https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip";
 
         static SteamAPI()
         {
             cur_dir = new DirectoryInfo(Assembly.GetEntryAssembly().Location).Parent;
             steamcmd_dir = cur_dir.CreateSubdirectory("steamcmd");
+        }
+
+        private static bool IsInitialized()
+        {
+            string steamclient = Path.Combine(steamcmd_dir.FullName, "steamclient.dll");
+            string steamclient64 = Path.Combine(steamcmd_dir.FullName, "steamclient64.dll");
+            return File.Exists(steamclient) && File.Exists(steamclient64);
         }
 
         public static void EnsureSteamCMDInstalled()
@@ -73,10 +67,16 @@ namespace wsdl
         {
             WriteLine("Ensuring we're up-to-date and got all the required files");
 
+            if (IsInitialized())
+            {
+                IsUpdated = true;
+                WriteLine("Skipping updates because we have some files");
+            }
+
             string steamcmd = Path.Combine(steamcmd_dir.FullName, "steamcmd.exe");
             Process p = new Process();
             p.StartInfo.FileName = steamcmd;
-            p.StartInfo.Arguments = "+login anonymous validate +quit";
+            p.StartInfo.Arguments = "+quit";
             p.StartInfo.UseShellExecute = false;
             p.StartInfo.RedirectStandardOutput = true;
             p.StartInfo.RedirectStandardInput = true;
@@ -96,18 +96,33 @@ namespace wsdl
 
             if (!IsUpdated) return;
 
+            downloads.Enqueue(new DownloadRequest()
+            {
+                GameId = gameid,
+                Id = id
+            });
+
             string steamcmd = Path.Combine(steamcmd_dir.FullName, "steamcmd.exe");
             Process p = new Process();
             p.StartInfo.FileName = steamcmd;
-            p.StartInfo.Arguments = string.Format("+login anonymous +workshop_download_item {1} {0} validate +quit", id, gameid);
+            p.StartInfo.Arguments = string.Format("+login anonymous +workshop_download_item {1} {0} +quit", id, gameid);
             p.StartInfo.UseShellExecute = false;
             p.StartInfo.RedirectStandardOutput = true;
             p.StartInfo.RedirectStandardInput = true;
             p.StartInfo.RedirectStandardError = true;
             p.OutputDataReceived += P_OutputDataReceived;
+            p.ErrorDataReceived += P_ErrorDataReceived;
             p.Start();
             p.BeginOutputReadLine();
             p.WaitForExit();
+        }
+
+        private static void P_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(e.Data))
+            {
+                WriteLine("Internal SteamCmd error: {0}", e.Data);
+            }
         }
 
         private static void P_OutputDataReceived(object sender, DataReceivedEventArgs e)
@@ -119,15 +134,18 @@ namespace wsdl
                     Match m = quote_pattern.Match(e.Data);
                     if (m.Success)
                     {
-                        string filename = m.Groups[1].Value;
-                        WriteLine("Downloaded file: {0}", filename);
-
-                        FileDownloaded?.Invoke(null, filename);
+                        DownloadRequest request = downloads.Dequeue();
+                        request.RawData = e.Data;
+                        request.Path = m.Groups[1].Value;
+                        FileDownloaded?.Invoke(null, request);
                     }
-                    
-                }else if (e.Data.StartsWith("ERROR"))
+
+                }
+                else if (e.Data.StartsWith("ERROR"))
                 {
-                    ErrorDownloading?.Invoke(null, e.Data);
+                    DownloadRequest request = downloads.Dequeue();
+                    request.RawData = e.Data;
+                    ErrorDownloading?.Invoke(null, request);
                 }
                 WriteLine(e.Data);
             }
